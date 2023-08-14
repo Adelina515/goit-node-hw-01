@@ -1,5 +1,5 @@
 console.log("welcome");
-const contacts = require("contacts.js");
+const { contacts } = require("./contacts");
 const { Command } = require("commander");
 const program = new Command();
 program
