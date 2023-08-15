@@ -1,5 +1,4 @@
-console.log("welcome");
-const { contacts } = require("./contacts");
+const contacts = require("./contacts");
 const { Command } = require("commander");
 const program = new Command();
 program
@@ -13,26 +12,25 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-// TODO: рефакторити
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       const listContacts = await contacts.listContacts();
-      return console.log(listContacts);
+      return console.table(listContacts);
 
     case "get":
       const oneContact = await contacts.getContactById(id);
-      // ... id
-      return console.log(oneContact);
+
+      return console.log({ oneContact });
 
     case "add":
       const newContact = await contacts.addContact({ name, email, phone });
-      // ... name email phone
+
       return console.log(newContact);
 
     case "remove":
       const deleteContact = await contacts.removeContact(id);
-      // ... id
+
       return console.log(deleteContact);
 
     default:
@@ -40,5 +38,4 @@ async function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-// invokeAction(argv);
-invokeAction({ action: "list" });
+invokeAction(argv);
